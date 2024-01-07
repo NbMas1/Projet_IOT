@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block i %}
+{% load static %}
+<head>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+</head>
+<style>
+    .logo {
+    font-size: 2em;
+    margin-right: 30px;
+    color: black;
+    border: solid #327586;
+    border-radius: 15px;
+    padding: 5px;
+    box-shadow: 5px 4px 0px 0px;
+    background: #26727194;
+}
+.navbar {
+    background-color: #3498db;
+    padding: 15px;
+}
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size : 25px
+}
+</style>
+<div class="navbar">
+    <nav >
+        <h1 class="logo">IOT Project</h1>
+
+            <ul>
+                    <li>  <a href="/" >Table</a></li>
+                    <li>  <a href="/myChart/" >Chart</a></li>
+                    <li>  <a href="/download_csv/" >Download</a></li>
+
+
+            </ul>
+    </nav>
+</div>
+
+<div class="dashboard">
+
+
+    <div class="show-row">
+        <form method="post" id="my-form">
+            {% csrf_token %}
+            {{ form }}
+        </form>
+    </div>
+
+    <div class="sensor-info">
+        <div class="sensor-data">
+
+            <div class="sensor-property">
+                    <img id="Temperature-logo" src="{% static 'images/temp.jpg' %}" alt="Temperature Image">
+
+                <div class="details">
+                <span class="temp" >Temperature {{ valeurs.temp }}°C</span>
+
+                <span> {{ valeurs.date }}</span>
+                </div>
+
+            </div>
+            <div class="sensor-property">
+                <img id="Humidity-logo" src="{% static 'images/humidity.jpg' %}" alt="Humidity Image">
+
+                <div class="details">
+                <span class="temp">Humidity {{ valeurs.hum }}%</span>
+                <span> {{ valeurs.date }}</span>
+            </div>
+                            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock i %}

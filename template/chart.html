@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block i %}
+<div class="chart-page">
+    <div class="navb">
+
+        <button id="aujourdhui-link">Today</button>
+        <button id="mois-link">This Month</button>
+    </div>
+
+    <div class="graph-card">
+
+        <div class="graphique">
+            <canvas id="graphique-temp" height="700" width="1000"></canvas>
+        </div>
+
+        <div class="graphique">
+            <canvas id="graphique-hum" height="500" width="700"></canvas>
+        </div>
+    </div>
+</div>
+<style>
+    .navb {
+    background-color: #3498db;  Changed background color */
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px 0; /* Increased padding */
+    z-index: 1000;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.navb button {
+    color: #fff;
+    background-color: #e74c3c; /* Changed button color */
+    padding: 12px 24px; /* Adjusted padding */
+    font-size: 20px; /* Adjusted font size */
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #3498db; /* Changed border color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3); /* Changed box shadow */
+    cursor: pointer;
+    transition: background-color 0.3s cubic-bezier(0.25, 0.1, 0.27, 0.93), box-shadow 2.4s ease;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const aujourdhuiLink = $('#aujourdhui-link');
+        const heureLink = $('#heure-link');
+        const moisLink = $('#mois-link');
+
+        function createChart(labels, dataValues, canvasId, label, borderColor) {
+    const ctx = $(`#${canvasId}`).get(0).getContext('2d');
+    new Chart(ctx, {
+    type: 'bar', // Change the chart type to 'bar'
+    data: {
+        labels,
+        datasets: [{
+            label,
+            data: dataValues,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Example color
+            borderColor: 'rgba(75, 192, 192, 1)', // Example color
+            borderWidth: 3, // Example width
+            hoverBackgroundColor: 'rgba(75, 192, 192, 0.4)', // Example color on hover
+            hoverBorderColor: 'rgba(75, 192, 192, 1)' // Example color on hover
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor: '#666',
+                    callback: (value, index, values) => value + (canvasId.includes('temp') ? '°C' : '%'),
+                },
+                gridLines: {
+                    color: 'rgba(0,0,0,0.35)'
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor: '#666',
+                    display: false
+                },
+                gridLines: {
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            }]
+        },
+        legend: {
+            display: true,
+            labels: {
+                fontColor: '#ff6347'
+            }
+        }
+    }
+});
+
+}
+
+        function fetchDataAndCreateChart(url, canvasId, label, borderColor) {
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const { temps, temperature, humidity } = data;
+                    const startIndex = 0;
+
+                    const labels = temps.slice(startIndex);
+                    const temperatureData = temperature.slice(startIndex);
+                    const humidityData = humidity.slice(startIndex);
+
+                    createChart(labels, temperatureData, `${canvasId}-temp`, `${label} Temperature`, borderColor);
+                    createChart(labels, humidityData, `${canvasId}-hum`, `${label} Humidity`, borderColor);
+                },
+                error: function (error) {
+                    console.error('Error fetching or processing data:', error);
+                }
+            });
+        }
+
+        function setupChart(linkElement, fetchDataFunction) {
+            linkElement.on('click', function () {
+                fetchDataFunction();
+            });
+        }
+
+        // Fetch and display charts for 'Today' on page load
+        fetchDataAndCreateChart('/chart-data-jour/', 'graphique', 'Today', 'rgb(43,96,86)');
+
+        // Set up click events for other buttons
+        setupChart(aujourdhuiLink, function () {
+            fetchDataAndCreateChart('/chart-data-jour/', 'graphique', 'Today', 'rgb(84,105,132)');
+        });
+        setupChart(heureLink, function () {
+            fetchDataAndCreateChart('/chart-data-heure/', 'graphique', 'This time', 'rgb(84,105,132)');
+        });
+        setupChart(moisLink, function () {
+            fetchDataAndCreateChart('/chart-data-mois/', 'graphique', 'This Month', 'rgb(84,105,132)');
+        });
+    });
+</script>
+
+{% endblock %}

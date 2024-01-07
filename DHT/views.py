@@ -1,5 +1,9 @@
+import telepot
 from django.shortcuts import render
-from .models import Dht11  # Assurez-vous d'importer le modèle Dht11
+from rest_framework import settings
+from rest_framework.utils import json
+
+from .models import Dht11  # Assures-vous d'importer le modèle Dht11
 from django.utils import timezone
 import csv
 from django.http import HttpResponse
@@ -7,7 +11,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from datetime import timedelta
 import datetime
-import telepot
+
 
 def table(request):
     derniere_ligne = Dht11.objects.last()
@@ -111,3 +115,29 @@ def sendtele():
     bot = telepot.Bot(token)
     bot.sendMessage(rece_id, 'la température depasse la normale')
     print(bot.sendMessage(rece_id, 'OK.'))
+
+def sendmail(message):
+    subject = 'Alerte DHT '
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['billaore02@gmail.com']
+    sendmail(subject,message,email_from,recipient_list)
+
+def receive_data(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            temperature = data['temp']
+            humidity = data ['hum']
+            Dht11.objects.create(temp=temperature , hum=humidity)
+            if temperature>17:
+                sendtele(request, "la normale est depassee")
+                sendmail("la normale est depassee")
+            if humidity>60:
+                sendtele(request, "la normale est depassee")
+                sendmail("la normale est depassee")
+            return JsonResponse({'status': 'success'})
+        except Exception as e :
+            return JsonResponse({'status':'erreur','message': str(e)})
+
+    else :
+        return JsonResponse({'status':'erreur','message':'Only POST requests are allowed' })
