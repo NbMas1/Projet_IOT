@@ -6,3 +6,5 @@ class DHT11Serializer(serializers.ModelSerializer):
     class Meta:
         model = Dht11
         fields = '__all__'
+
+

@@ -1,0 +1,99 @@
+/* Reset some default browser styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', sans-serif; /* Change the font */
+    background-color: #ecf0f1; /* Change the background color */
+}
+
+.dashboard {
+    max-width: 1200px; /* Increased max-width */
+    margin: 30px auto; /* Increased margin */
+    padding: 30px; /* Increased padding */
+    border-radius: 10px; /* Increased border-radius */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Added box shadow */
+}
+
+h3 {
+    color: #3498db; /* Changed text color */
+}
+
+.show-row {
+    margin-bottom: 30px; /* Increased margin-bottom */
+}
+
+.sensor-info {
+    padding: 20px; /* Increased padding */
+    border-radius: 12px; /* Increased border-radius */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow */
+}
+
+.sensor-data {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.sensor-property {
+    flex-basis: 48%; /* Adjusted flex-basis */
+    padding: 20px; /* Increased padding */
+    border: 2px solid #ddd; /* Adjusted border */
+    border-radius: 12px;
+    margin-bottom: 20px; /* Increased margin-bottom */
+    background-color: #f9f9f9; /* Changed background color */
+    transition: background-color 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.sensor-property:hover {
+    background-color: #e5e5e5; /* Changed background color on hover */
+}
+
+.sensor-property span {
+    display: block;
+    margin-bottom: 15px; /* Increased margin-bottom */
+    color: #555; /* Changed text color */
+    font-size: 16px; /* Adjusted font size */
+}
+
+.sensor-property img {
+    max-width: 100%; /* Adjusted max-width */
+    height: auto;
+    border-radius: 12px;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 30px; /* Increased padding-left */
+}
+
+#Temperature-logo {
+    border: 2px solid #e74c3c; /* Changed border color */
+    padding: 15px; /* Increased padding */
+}
+
+#Humidity-logo {
+    border: 2px solid #3498db; /* Changed border color */
+    padding: 15px; /* Increased padding */
+}
+
+span.temp {
+    font-size: 24px; /* Increased font size */
+    font-weight: normal; /* Changed font weight */
+}
+
+@media only screen and (max-width: 600px) {
+    .sensor-property {
+        flex-basis: 100%;
+    }
+}

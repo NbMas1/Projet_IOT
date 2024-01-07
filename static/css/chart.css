@@ -1,0 +1,88 @@
+/* Reset some default browser styles */
+.chart-page {
+    padding: 10px; /* Changed padding */
+}
+
+/* Styles for the navigation bar */
+.navb {
+    background-color:#438ea1;
+    /*background-color: #3498db; /* Changed background color */
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px 0; /* Increased padding */
+    z-index: 1000;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.navb button {
+    color: #fff;
+    background-color: #e74c3c; /* Changed button color */
+    padding: 12px 24px; /* Adjusted padding */
+    font-size: 16px; /* Adjusted font size */
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #3498db; /* Changed border color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3); /* Changed box shadow */
+    cursor: pointer;
+    transition: background-color 0.3s cubic-bezier(0.25, 0.1, 0.27, 0.93), box-shadow 0.3s ease;
+}
+
+.navb button:focus,
+.navb button:hover {
+    background-color: #c0392b; /* Changed button color on focus/hover */
+}
+
+/* Styles for the chart containers */
+.graph-card {
+    background-color: #dfe6e9; /* Changed background color */
+    border-radius: 20px; /* Increased border radius */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 30px; /* Increased margin */
+    flex-direction: row;
+    align-content: center;
+}
+
+/* Styles for individual chart containers */
+.graphique {
+    border: 3px solid #bdc3c7; /* Changed border color */
+    border-radius: 20px; /* Increased border radius */
+    overflow: hidden;
+    margin: 40px; /* Increased margin */
+    width: calc(800px); /* Increased width */
+    background-color: #ecf0f1; /* Changed background color */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Added box shadow */
+    transition: transform 0.4s ease; /* Adjusted transition duration */
+}
+
+.graphique:hover {
+    transform: translateY(-10px); /* Increased translateY on hover */
+}
+
+/* Styles for canvas elements */
+canvas {
+    width: 100%;
+    border: 3px solid #bdc3c7; /* Changed border color */
+}
+
+#graphique-temp,
+#graphique-hum {
+    /* Add specific styles if needed */
+}
+
+/* Styles for the line charts with a more professional look */
+.graphique canvas {
+    border-radius: 20px; /* Increased border radius */
+    border: 3px solid #bdc3c7; /* Changed border color */
+    transition: box-shadow 0.4s ease; /* Adjusted transition duration */
+}
+
+.graphique:hover canvas {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); /* Increased box shadow on hover */
+}
